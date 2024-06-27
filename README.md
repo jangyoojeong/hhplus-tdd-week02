@@ -43,9 +43,7 @@
 * 특정 userId 로 특강 신청 완료 여부를 조회하는 API 를 작성합니다.
 * 특강 신청에 성공한 사용자는 성공했음을, 특강 등록자 명단에 없는 사용자는 실패했음을 반환합니다. (true, false)
   
-<aside>
 💡 **KEY POINT**
-</aside>
 * 정확하게 30명의 사용자에게만 특강을 제공할 방법을 고민해 봅니다.
 * 같은 사용자에게 여러 번의 특강 슬롯이 제공되지 않도록 제한할 방법을 고민해 봅니다.
 
@@ -79,6 +77,7 @@
   - (동시성) 각 강의 별로 최대 30명까지만 정상적으로 요청되도록 기능 구현
 
 
+
 #### Clean + Layered Architecture ?
 ![image](https://github.com/jangyoojeong/hhplus-tdd-week02/assets/55098858/bac6c895-72be-459b-bc39-a57a7850a9af)
 
@@ -87,6 +86,7 @@
 * 도메인 중심적인 계층 아키텍처
 * Presentation 은 도메인을 API로 서빙, DataSource 는 도메인이 필요로 하는 기능을 서빙
 * DIP 🆗 OCP 🆗
+
 
 
 #### 레이어드 아키텍처의 대원칙
@@ -101,6 +101,7 @@ domain
 infra
  > domainRepositoryImpl, entity
 ------------------------------------
+
 
 
 #### 동시성 제어 ?
