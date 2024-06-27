@@ -42,16 +42,16 @@ public class LectureService {
     @Transactional
     public LectureApplyResult applyForLecture(LectureApplyCommand command) {
 
+        // 동일한 신청자가 동일한 특강을 신청한 내용이 있는지 확인
+        if (registrationPersistence.existsByUserIdAndScheduleId(RegistrationDomain.of(command))) {
+            throw new RuntimeException("이미 신청완료된 특강입니다.");
+        }
+
         // 스케쥴 정보 조회 (동시성 제어를 위한 비관적 Lock 설정 > 선착순)
         LectureScheduleDomain scheduleDomain = lectureSchedulePersistence.applyForLectureWithPessimisticLock(LectureScheduleDomain.of(command));
 
         if (scheduleDomain == null) {
             throw new NoSuchElementException("해당 스케쥴 정보가 존재하지 않습니다.");
-        }
-
-        // 동일한 신청자가 동일한 특강을 신청한 내용이 있는지 확인
-        if (registrationPersistence.existsByUserIdAndScheduleId(RegistrationDomain.of(command))) {
-            throw new RuntimeException("이미 신청완료된 특강입니다.");
         }
 
         // 특강등록인원 갱신
