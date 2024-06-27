@@ -47,10 +47,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 public class LectureConcurrencyTest {
     @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
     private LectureService lectureService;
     @Autowired
     private LecturePersistence lecturePersistence;

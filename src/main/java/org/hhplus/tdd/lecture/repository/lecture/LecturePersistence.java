@@ -3,7 +3,7 @@ import org.hhplus.tdd.lecture.domain.LectureDomain;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
+
 public interface LecturePersistence {
 
     /**
