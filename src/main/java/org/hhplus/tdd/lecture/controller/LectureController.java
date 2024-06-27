@@ -31,25 +31,6 @@ public class LectureController {
     /**
      * 특강 신청 API
      */
-    @PostMapping("/apply/112")
-    public ResponseEntity<LectureApplyResponse> applyForLecture112 (@RequestBody LectureApplyRequest request) {
-        lectureSchedulePersistence.save(new LectureScheduleDomain(1L, LocalDate.of(2024, 6, 29), 30, 0));
-        LectureApplyResponse response = new LectureApplyResponse();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    /**
-     * 특강 신청 API
-     */
-    @PostMapping("/apply/11")
-    public ResponseEntity<LectureApplyResponse> applyForLecture11 (@RequestBody LectureApplyRequest request) {
-        LectureApplyResponse response = LectureApplyResponse.toResponse(lectureService.applyForLecture(request.toCommand()));
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    /**
-     * 특강 신청 API
-     */
     @PostMapping("/apply")
     public ResponseEntity<LectureApplyResponse> applyForLecture (@RequestBody LectureApplyRequest request) {
         LectureApplyResponse response = LectureApplyResponse.toResponse(lectureService.applyForLecture(request.toCommand()));
