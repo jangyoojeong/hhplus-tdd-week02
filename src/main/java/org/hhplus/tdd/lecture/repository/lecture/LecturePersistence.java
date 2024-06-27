@@ -1,9 +1,8 @@
 package org.hhplus.tdd.lecture.repository.lecture;
 import org.hhplus.tdd.lecture.domain.LectureDomain;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
+
 public interface LecturePersistence {
 
     /**

@@ -2,12 +2,14 @@ package org.hhplus.tdd.lecture.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.hhplus.tdd.lecture.domain.LectureScheduleDomain;
+import org.hhplus.tdd.lecture.domain.RegistrationDomain;
 import org.hhplus.tdd.lecture.domain.command.LectureApplicationCommand;
 import org.hhplus.tdd.lecture.dto.request.LectureApplyRequest;
 import org.hhplus.tdd.lecture.dto.response.LectureApplicationResponse;
 import org.hhplus.tdd.lecture.dto.response.LectureApplyResponse;
 import org.hhplus.tdd.lecture.dto.response.LectureGetResponse;
 import org.hhplus.tdd.lecture.repository.lectureSchedule.LectureSchedulePersistence;
+import org.hhplus.tdd.lecture.repository.registration.RegistrationPersistence;
 import org.hhplus.tdd.lecture.service.LectureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,26 +28,6 @@ public class LectureController {
     private static final Logger log = LoggerFactory.getLogger(LectureController.class);
 
     private final LectureService lectureService;
-    private final LectureSchedulePersistence lectureSchedulePersistence;
-
-    /**
-     * 특강 신청 API
-     */
-    @PostMapping("/apply/112")
-    public ResponseEntity<LectureApplyResponse> applyForLecture112 (@RequestBody LectureApplyRequest request) {
-        lectureSchedulePersistence.save(new LectureScheduleDomain(1L, LocalDate.of(2024, 6, 29), 30, 0));
-        LectureApplyResponse response = new LectureApplyResponse();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    /**
-     * 특강 신청 API
-     */
-    @PostMapping("/apply/11")
-    public ResponseEntity<LectureApplyResponse> applyForLecture11 (@RequestBody LectureApplyRequest request) {
-        LectureApplyResponse response = LectureApplyResponse.toResponse(lectureService.applyForLecture(request.toCommand()));
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
 
     /**
      * 특강 신청 API

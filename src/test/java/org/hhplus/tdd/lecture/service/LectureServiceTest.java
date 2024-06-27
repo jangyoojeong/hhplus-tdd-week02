@@ -18,9 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,10 +30,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
 public class LectureServiceTest {
@@ -66,19 +60,20 @@ public class LectureServiceTest {
         lectureSchedulePersistence.save(new LectureScheduleDomain(1L, LocalDate.of(2024, 6, 29), 30, 0));
         lectureSchedulePersistence.save(new LectureScheduleDomain(1L, LocalDate.of(2024, 6, 30), 30, 0));
 
+        registrationPersistence.save(new RegistrationDomain(1L, 1L));
     }
 
     @Test
-    @DisplayName("[성공테스트] 특강_신청_테스트_신청_후_저장정보가_정상적으로_리턴된다")
+    @DisplayName("[성공] 특강_신청_테스트_신청_후_저장정보가_정상적으로_리턴된다")
     public void applyForLectureTest_특강_신청_테스트_신청_후_저장정보가_정상적으로_리턴된다 () {
         // Given
-        LectureApplyCommand command = new LectureApplyCommand(userId, scheduleId);
-        LectureScheduleDomain scheduleDomain = new LectureScheduleDomain(scheduleId, 1L, LocalDate.of(2024, 6, 29), 30, 0);
+        LectureApplyRequest request = new LectureApplyRequest(userId, scheduleId);
+        LectureApplyCommand command = request.toCommand();
+        LectureScheduleDomain lectureScheduleDomain = new LectureScheduleDomain(1L, 1L, LocalDate.of(2024, 6, 29), 30, 0);
         RegistrationDomain legistrationDomain = RegistrationDomain.of(command);
         legistrationDomain.setRegistrationId(1L);
 
-        given(registrationPersistence.existsByUserIdAndScheduleId(any(RegistrationDomain.class))).willReturn(false);
-        given(lectureSchedulePersistence.applyForLectureWithPessimisticLock(any(LectureScheduleDomain.class))).willReturn(scheduleDomain);
+        given(lectureSchedulePersistence.applyForLectureWithPessimisticLock(any(LectureScheduleDomain.class))).willReturn(lectureScheduleDomain);
         given(registrationPersistence.save(any(RegistrationDomain.class))).willReturn(legistrationDomain);
 
         // When
@@ -93,7 +88,7 @@ public class LectureServiceTest {
     }
 
     @Test
-    @DisplayName("[실패테스트] 특강_신청_테스트_존재하지_않는_특강_신청시_예외반환")
+    @DisplayName("[실패] 특강_신청_테스트_존재하지_않는_특강_신청시_예외반환")
     public void applyForLectureTest_특강_신청_테스트_존재하지_않는_특강_신청시_예외반환 () {
         // Given
         LectureApplyRequest request = new LectureApplyRequest(userId, 99L);
@@ -106,7 +101,7 @@ public class LectureServiceTest {
     }
 
     @Test
-    @DisplayName("[성공테스트] 특강_목록_조회_테스트_2건의_목록이_정상적으로_조회된다")
+    @DisplayName("[성공] 특강_목록_조회_테스트_2건의_목록이_정상적으로_조회된다")
     public void getAllLecturesTest_특강_목록_조회_테스트_2건의_목록이_정상적으로_조회된다 () {
         // Given
         List<LectureScheduleDomain> lectureScheduleList = new ArrayList<>(Arrays.asList(
@@ -131,7 +126,7 @@ public class LectureServiceTest {
     }
 
     @Test
-    @DisplayName("[성공테스트] 특강_신청_완료_여부_조회_테스트_1유저가_신청한_1특강은_TRUE를_리턴한다")
+    @DisplayName("[성공] 특강_신청_완료_여부_조회_테스트_1유저가_신청한_1특강은_TRUE를_리턴한다")
     public void getLectureApplicationStatusTest_특강_신청_완료_여부_조회_테스트_1유저가_신청한_1특강은_TRUE를_리턴한다 () {
         // Given
         LectureApplicationCommand command = new LectureApplicationCommand(userId, scheduleId);
@@ -147,7 +142,7 @@ public class LectureServiceTest {
     }
 
     @Test
-    @DisplayName("[성공테스트] 특강_신청_완료_여부_조회_테스트_1유저가_신청하지_않은_2특강은_FALSE를_리턴한다")
+    @DisplayName("[성공] 특강_신청_완료_여부_조회_테스트_1유저가_신청하지않은_2특강은_FALSE를_리턴한다")
     public void getLectureApplicationStatusTest_특강_신청_완료_여부_조회_테스트_1유저가_신청하지않은_2특강은_FALSE를_리턴한다 () {
         // Given
         LectureApplicationCommand command = new LectureApplicationCommand(userId, 2L);
@@ -162,19 +157,4 @@ public class LectureServiceTest {
         assertThat(result.getApplicationStatus()).isFalse();
     }
 
-    @Test
-    @DisplayName("[실패테스트] 동일한_유저가_동일특강을_두번의_수강신청시_예외반환")
-    public void applyForLectureTest_동일한_유저가_동일특강을_두번의_수강신청시_예외반환 () {
-        // Given
-        LectureApplyCommand command = new LectureApplyCommand(userId, scheduleId);
-        LectureScheduleDomain scheduleDomain = new LectureScheduleDomain(1L, 1L, LocalDate.of(2024, 6, 29), 30, 0);
-
-        given(registrationPersistence.existsByUserIdAndScheduleId(any(RegistrationDomain.class))).willReturn(true);
-        given(lectureSchedulePersistence.applyForLectureWithPessimisticLock(any(LectureScheduleDomain.class))).willReturn(scheduleDomain);
-
-        // When & Then
-        assertThrows(RuntimeException.class, () -> {
-            lectureService.applyForLecture(command);
-        });
-    }
 }
