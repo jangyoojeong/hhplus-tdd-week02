@@ -26,7 +26,6 @@ public class LectureController {
     private static final Logger log = LoggerFactory.getLogger(LectureController.class);
 
     private final LectureService lectureService;
-    private final LectureSchedulePersistence lectureSchedulePersistence;
 
     /**
      * 특강 신청 API
