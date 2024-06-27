@@ -1,9 +1,10 @@
 package org.hhplus.tdd.lecture.repository.registration;
 
 import org.hhplus.tdd.lecture.domain.RegistrationDomain;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface RegistrationPersistence {
     /**
      * 특강 신청 정보를 저장

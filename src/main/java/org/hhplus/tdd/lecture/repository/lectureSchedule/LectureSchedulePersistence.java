@@ -13,6 +13,13 @@ public interface LectureSchedulePersistence {
     LectureScheduleDomain applyForLectureWithPessimisticLock(LectureScheduleDomain domain);
 
     /**
+     * 특강 스케쥴 단건 조회
+     * @param
+     * @return 특강 도메인 객체
+     */
+    LectureScheduleDomain findById(LectureScheduleDomain domain);
+
+    /**
      * 특강 스케쥴 목록 조회
      * @param
      * @return 특강 목록 도메인 객체 리스트
