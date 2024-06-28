@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
+    boolean existsByUserIdAndScheduleId(Long userId, Long scheduleId);
 }

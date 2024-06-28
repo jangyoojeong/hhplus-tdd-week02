@@ -14,4 +14,8 @@ public class LectureApplyRequest {
     private Long userId;            // 사용자ID
     private Long scheduleId;        // 스케쥴ID
 
+    public LectureApplyCommand toCommand() {
+        return LectureApplyCommand.builder().userId(this.getUserId()).scheduleId(this.getScheduleId()).build();
+    }
+
 }
