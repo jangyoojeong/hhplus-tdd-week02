@@ -4,9 +4,7 @@
 
 ## [Chapter 1-2] 클린아키텍처
 
-
-### ERD
-![image]([https://github.com/jangyoojeong/hhplus-tdd-week02/assets/55098858/f46bf5cf-43f4-442e-9ce3-2f0f31a85a1a](https://github.com/jangyoojeong/hhplus-tdd-week02/assets/55098858/f658c90f-2474-4fc6-b3d6-11dc313303ec))
+[ERD](https://github.com/jangyoojeong/hhplus-tdd-week02/assets/55098858/f658c90f-2474-4fc6-b3d6-11dc313303ec)
 
 ### 과제
 [ Description ]
