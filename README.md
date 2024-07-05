@@ -6,16 +6,7 @@
 
 
 ### ERD
-![image](https://github.com/jangyoojeong/hhplus-tdd-week02/assets/55098858/f46bf5cf-43f4-442e-9ce3-2f0f31a85a1a)
-1. lecture > 특강 정보 테이블
-   * 특강에 대한 정보 관리
-   
-2. lecture_schedule > 일자별 특강 정보 테이블
-   * 날짜별 특강 정보 관리  (+ 특강에 대한 수강 정원 관리)
-
-3. registration > 특강 신청 테이블
-   * 특강 신청자 목록 관리
-
+![image]([https://github.com/jangyoojeong/hhplus-tdd-week02/assets/55098858/f46bf5cf-43f4-442e-9ce3-2f0f31a85a1a](https://github.com/jangyoojeong/hhplus-tdd-week02/assets/55098858/f658c90f-2474-4fc6-b3d6-11dc313303ec))
 
 ### 과제
 [ Description ]
