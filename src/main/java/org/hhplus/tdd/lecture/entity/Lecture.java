@@ -38,6 +38,7 @@ public class Lecture {
                 .build();
     }
 
+
     public static LectureDomain toDomain(Lecture entity) {
         return LectureDomain.builder()
                 .lectureId(entity.getLectureId())
