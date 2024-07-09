@@ -30,6 +30,7 @@ public class Lecture {
         this.title = title;
     }
 
+
     public static Lecture toEntity(LectureDomain domain) {
         return Lecture.builder()
                 .lectureId(domain.getLectureId())
