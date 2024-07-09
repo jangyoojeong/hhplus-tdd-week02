@@ -5,8 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hhplus.tdd.lecture.domain.LectureScheduleDomain;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -33,4 +37,36 @@ public class LectureSchedule {
     @Column(name = "enrollment_count")
     private int enrollmentCount;      // 특강등록인원
 
+    public LectureSchedule(Long lectureId, LocalDate lectureDate, int capacity, int enrollmentCount) {
+        this.lectureId = lectureId;
+        this.lectureDate = lectureDate;
+        this.capacity = capacity;
+        this.enrollmentCount = enrollmentCount;
+    }
+
+    public static LectureSchedule toEntity(LectureScheduleDomain domain) {
+        return LectureSchedule.builder()
+                .scheduleId(domain.getScheduleId())
+                .lectureId(domain.getLectureId())
+                .lectureDate(domain.getLectureDate())
+                .capacity(domain.getCapacity())
+                .enrollmentCount(domain.getEnrollmentCount())
+                .build();
+    }
+
+    public static LectureScheduleDomain toDomain(LectureSchedule entity) {
+        return LectureScheduleDomain.builder()
+                .scheduleId(entity.getScheduleId())
+                .lectureId(entity.getLectureId())
+                .lectureDate(entity.getLectureDate())
+                .capacity(entity.getCapacity())
+                .enrollmentCount(entity.getEnrollmentCount())
+                .build();
+    }
+
+    public static List<LectureScheduleDomain> toDomainList(List<LectureSchedule> entityList) {
+        return entityList.stream()
+                .map(LectureSchedule::toDomain)
+                .collect(Collectors.toList());
+    }
 }
